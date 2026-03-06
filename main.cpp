@@ -6,7 +6,6 @@ const int MAX = 20;
 
 /* ================= ФУНКЦІЇ ДЛЯ МАСИВУ ================= */
 
-// зчитування масиву з файлу
 void readArray(string filename, double arr[], int &n)
 {
     ifstream fin(filename);
@@ -25,7 +24,6 @@ void readArray(string filename, double arr[], int &n)
     fin.close();
 }
 
-// запис масиву у файл
 void writeArray(string filename, double arr[], int n)
 {
     ofstream fout(filename, ios::app);
@@ -41,7 +39,6 @@ void writeArray(string filename, double arr[], int n)
 }
 
 /* ================= ЗАВДАННЯ 1 ================= */
-/* Видалити елемент з номером K */
 
 void deleteK(double arr[], int &n, int k)
 {
@@ -51,8 +48,7 @@ void deleteK(double arr[], int &n, int k)
     n--;
 }
 
-/* ================= СОРТУВАННЯ (ЗАВДАННЯ 3) ================= */
-/* Сортування вставками за спаданням */
+/* ================= СОРТУВАННЯ ================= */
 
 void insertionSort(double arr[], int n)
 {
@@ -73,7 +69,6 @@ void insertionSort(double arr[], int n)
 
 /* ================= ФУНКЦІЇ ДЛЯ МАТРИЦІ ================= */
 
-// зчитування матриці
 void readMatrix(string filename, double matrix[MAX][MAX], int &m, int &n)
 {
     ifstream fin(filename);
@@ -93,7 +88,6 @@ void readMatrix(string filename, double matrix[MAX][MAX], int &m, int &n)
     fin.close();
 }
 
-// запис матриці у файл
 void writeMatrix(string filename, double matrix[MAX][MAX], int m, int n)
 {
     ofstream fout(filename, ios::app);
@@ -111,7 +105,6 @@ void writeMatrix(string filename, double matrix[MAX][MAX], int m, int n)
 }
 
 /* ================= ЗАВДАННЯ 2 ================= */
-/* Знайти кількість рядків із зростанням */
 
 int countIncreasingRows(double matrix[MAX][MAX], int m, int n)
 {
@@ -137,20 +130,13 @@ int countIncreasingRows(double matrix[MAX][MAX], int m, int n)
     return count;
 }
 
-/* ================= MAIN ================= */
+/* ================= ФУНКЦІЇ ЗАВДАНЬ ================= */
 
-int main()
+void task1()
 {
     double arr[MAX];
-    double matrix[MAX][MAX];
-
-    int n, m, cols;
-    int k;
-
+    int n, k;
     string arrayFileIn, arrayFileOut;
-    string matrixFile;
-
-    /* ===== ЗАВДАННЯ 1 ===== */
 
     cout << "Введіть файл з масивом: ";
     cin >> arrayFileIn;
@@ -168,11 +154,15 @@ int main()
     writeArray(arrayFileOut, arr, n);
 
     cout << "Елемент видалено. Результат записано у файл.\n";
+}
 
+void task2()
+{
+    double matrix[MAX][MAX];
+    int m, cols;
+    string matrixFile;
 
-    /* ===== ЗАВДАННЯ 2 ===== */
-
-    cout << "\nВведіть файл з матрицею: ";
+    cout << "Введіть файл з матрицею: ";
     cin >> matrixFile;
 
     readMatrix(matrixFile, matrix, m, cols);
@@ -182,17 +172,68 @@ int main()
     cout << "Кількість рядків із зростанням: " << result << endl;
 
     writeMatrix(matrixFile, matrix, m, cols);
+}
 
+void task3()
+{
+    double arr[MAX];
+    int n;
+    string arrayFileIn, arrayFileOut;
 
-    /* ===== ЗАВДАННЯ 3 ===== */
+    cout << "Введіть файл з масивом: ";
+    cin >> arrayFileIn;
 
-    cout << "\nСортування масиву методом вставок (за спаданням)...\n";
+    cout << "Введіть файл для результату: ";
+    cin >> arrayFileOut;
+
+    readArray(arrayFileIn, arr, n);
 
     insertionSort(arr, n);
 
     writeArray(arrayFileOut, arr, n);
 
     cout << "Відсортований масив записано у файл.\n";
+}
+
+/* ================= MAIN ================= */
+
+int main()
+{
+    int choice;
+
+    do
+    {
+        cout << "\n===== МЕНЮ =====\n";
+        cout << "1 - Видалити елемент з масиву\n";
+        cout << "2 - Порахувати зростаючі рядки матриці\n";
+        cout << "3 - Сортувати масив (вставками)\n";
+        cout << "0 - Вихід\n";
+        cout << "Ваш вибір: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+            case 1:
+                task1();
+                break;
+
+            case 2:
+                task2();
+                break;
+
+            case 3:
+                task3();
+                break;
+
+            case 0:
+                cout << "Завершення програми.\n";
+                break;
+
+            default:
+                cout << "Невірний вибір!\n";
+        }
+
+    } while (choice != 0);
 
     return 0;
 }
